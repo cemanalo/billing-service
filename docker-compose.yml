@@ -1,0 +1,19 @@
+# file: docker-compose.yml
+version: '3'
+services:
+  dockerize:
+    image: jwilder/dockerize:0.6.1
+  db:
+    image: postgres:15.4-bullseye
+    environment:
+      POSTGRES_PASSWORD: pw123AWqasde
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  node:
+    image: node:lts-bullseye
+    volumes:
+      - .:/home/node/app
+    working_dir: /home/node/app
