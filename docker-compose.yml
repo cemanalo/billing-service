@@ -17,3 +17,4 @@ services:
     volumes:
       - .:/home/node/app
     working_dir: /home/node/app
+    env_file: .env

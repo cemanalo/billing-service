@@ -34,3 +34,12 @@ deps:
 
 _deps:
 	npm install
+
+_tsc:
+	node node_modules/typescript/bin/tsc
+
+nodeCli:
+	$(NODE_COMMAND) node ./dist/test.js
+
+_prettifyAll:
+	npx prettier . --write 
