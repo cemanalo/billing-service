@@ -10,11 +10,13 @@ export default function getLogger() {
       new transports.File({ filename: 'combined.log' }),
     ],
   })
-  
+
   if (process.env.NODE_ENV !== 'production') {
-    logger.add(new transports.Console({
-      format: format.simple(),
-    }));
+    logger.add(
+      new transports.Console({
+        format: format.simple(),
+      }),
+    )
   }
 
   return logger

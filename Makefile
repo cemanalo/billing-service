@@ -46,3 +46,16 @@ _prettifyAll:
 
 clearLogs:
 	rm -f combined.log error.log
+
+testUnit:
+	$(NODE_COMMAND) make _testUnit
+
+
+_testUnit:
+	node node_modules/jest/bin/jest.js --config jest.config.js --testPathPattern tests/unit
+
+testWithCoverage:
+	$(NODE_COMMAND) make _testWithCoverage
+
+_testWithCoverage:
+		node node_modules/jest/bin/jest.js --config jest.config.js --testPathPattern tests/unit --coverage

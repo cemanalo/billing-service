@@ -1,17 +1,18 @@
 import { Client } from 'ts-postgres'
 import getLogger from '../../utils/logger'
 
-import DatabaseConnection from '../database/connection'
+import DBConnection from '../database/connection'
 import BillingDTO from '../dto/billing_dto'
-
+import PgConnection from '../database/pg_connection'
 
 export default abstract class BillingRepository {
   abstract insert(billing: BillingDTO): Promise<string>
 }
 
 export class BillingRepositoryImpl extends BillingRepository {
-  constructor(private dbConn = new DatabaseConnection()) {
+  constructor(private dbConn?: DBConnection) {
     super()
+    this.dbConn = dbConn || new PgConnection()
   }
 
   async insert(billing: BillingDTO): Promise<string> {
@@ -70,11 +71,10 @@ export class BillingRepositoryImpl extends BillingRepository {
       )
 
       return query.status
-    } catch(err) {
+    } catch (err) {
       logger.error([`Error inserting billing info`, err])
       throw err
-    }
-    finally {
+    } finally {
       logger.info('client end')
       if (client) {
         await client.end()
