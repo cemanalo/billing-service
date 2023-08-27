@@ -1,7 +1,5 @@
 # Billing service for Water District
 
-## Local development
-
 ### Requirements:
 
 - Make
