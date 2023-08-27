@@ -42,4 +42,7 @@ nodeCli:
 	$(NODE_COMMAND) node ./dist/test.js
 
 _prettifyAll:
-	npx prettier . --write 
+	npx prettier . --write
+
+clearLogs:
+	rm -f combined.log error.log

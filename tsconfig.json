@@ -5,7 +5,7 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "out"
   },
   "include": ["app/**/*"],
   "exclude": ["node_modules", ".npm"]

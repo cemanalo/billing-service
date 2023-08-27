@@ -1,9 +1,9 @@
-import BillingEntity from './entities/billing_entity'
-import BillingRepository from './repositories/billing_repository'
+import BillingDTO from './entities/dto/billing_dto'
+import BillingRepository, { BillingRepositoryImpl } from './entities/repositories/billing_repository'
 
 async function test() {
-  const repo = new BillingRepository()
-  const billing = new BillingEntity(
+  const repo = new BillingRepositoryImpl()
+  const billing = new BillingDTO(
     111111,
     new Date(),
     new Date(),
@@ -15,9 +15,10 @@ async function test() {
     175,
     new Date(),
   )
-  const result = await repo.insert(billing)
+  console.log('test')
+    const result = await repo.insert(billing)
 
-  console.log(result)
+    console.log(result)
 }
 
 test()

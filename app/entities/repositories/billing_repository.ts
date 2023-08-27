@@ -1,10 +1,23 @@
+import { Client } from 'ts-postgres'
+import getLogger from '../../utils/logger'
+
 import DatabaseConnection from '../database/connection'
-import BillingEntity from '../entities/billing_entity'
+import BillingDTO from '../dto/billing_dto'
 
-export default class BillingRepository {
-  constructor(private dbConn = new DatabaseConnection()) {}
 
-  async insert(billing: BillingEntity) {
+export default abstract class BillingRepository {
+  abstract insert(billing: BillingDTO): Promise<string>
+}
+
+export class BillingRepositoryImpl extends BillingRepository {
+  constructor(private dbConn = new DatabaseConnection()) {
+    super()
+  }
+
+  async insert(billing: BillingDTO): Promise<string> {
+    const logger = getLogger()
+
+    logger.info('inserting billing info to database')
     const {
       accountId,
       periodCoveredFrom,
@@ -17,9 +30,11 @@ export default class BillingRepository {
       currentMonthBillCent,
       dueDate,
     } = billing
-    const client = await this.dbConn.connect()
+
+    let client: Client
 
     try {
+      client = await this.dbConn.connect()
       const query = await client.query(
         `
         INSERT INTO billing
@@ -53,9 +68,17 @@ export default class BillingRepository {
           dueDate,
         ],
       )
-      return query
-    } finally {
-      await client.end()
+
+      return query.status
+    } catch(err) {
+      logger.error([`Error inserting billing info`, err])
+      throw err
+    }
+    finally {
+      logger.info('client end')
+      if (client) {
+        await client.end()
+      }
     }
   }
 }

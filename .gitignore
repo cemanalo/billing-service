@@ -3,4 +3,10 @@ node_modules/
 .DS_Store
 .env
 
+# build
 dist
+out
+
+# logger
+combined.log
+error.log

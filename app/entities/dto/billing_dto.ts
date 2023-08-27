@@ -1,6 +1,6 @@
 import { BillingModel } from '../database/models/billing_model'
 
-export default class BillingEntity {
+export default class BillingDTO {
   constructor(
     public accountId: number,
     public periodCoveredFrom: Date,
@@ -15,7 +15,7 @@ export default class BillingEntity {
     public id?: number,
   ) {}
 
-  static mapDataModelToEntity(dataModel: BillingModel): BillingEntity {
+  static mapDataModelToEntity(dataModel: BillingModel): BillingDTO {
     const {
       billing_id,
       fk_account_id,
@@ -30,7 +30,7 @@ export default class BillingEntity {
       due_date,
     } = dataModel
 
-    return new BillingEntity(
+    return new BillingDTO(
       fk_account_id,
       period_covered_from,
       period_covered_to,
